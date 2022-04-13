@@ -1,6 +1,6 @@
 # ecommerce
 # KONFIGURIMI
-Ne config/config.php
+Ne config/config.php <br>
 Ne rreshtin e 10 vendosim pathin e projektit
 Ne rreshtin 30 bejm konfigurimin e databazes
 
