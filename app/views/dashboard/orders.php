@@ -7,6 +7,14 @@
         </div>
         <div class="box box-primary">
             <div class="box-body">
+                <div class="d-none paidStatus">
+                    <select name="paidStatus" id="paidStatus" class="form-control form-control-sm" aria-controls="dataTables" onchange="filterDtPaidStatus()">
+                        <option value="">All</option>
+                        <option value="Paid" selected>Paid</option>
+                        <option value="Not Paid">Not Paid</option>
+                    </select>
+                </div>
+  
                 <table width="100%" class="table table-hover" id="dataTables">
 
                 </table>
@@ -26,8 +34,6 @@
 <script src="<?php echo BASE_URL; ?>assets/dashboard/js/initiate-datatables.js"></script>
 
 <script>
-
-const baseUrl = "<?php echo BASE_URL; ?>";
 
 (function() {
     load_ordersDataTable();

@@ -115,7 +115,7 @@
             return false;
         }
 
-        public function insert($table, $fields = []){
+        public function insert($table, $fields = [], $returnInsertQuery = false){
             $fieldString = '';
             $valueString = '';
             $values = [];
@@ -129,13 +129,41 @@
             $fieldString = rtrim($fieldString, ',');
             $valueString = rtrim($valueString, ',');
             $sql = "INSERT INTO {$table} ({$fieldString}) VALUES ({$valueString})";
+            if($returnInsertQuery) {
+                $valueString = implode(',', $values);
+                $sql = "INSERT INTO {$table} ({$fieldString}) VALUES ({$valueString})";
+                return [
+                    'sql' => $sql,
+                    'values' => $values
+                ];
+            }
             if(!$this->query($sql, $values)->error()){
                 return $this->_lastInsertID;
             }
             return false;
         }
 
-        public function update($table, $id, $fields = []){
+        public function procedure($procedureName, $fields = []){
+            $fieldString = '';
+            $valueString = '';
+            $values = [];
+
+            foreach($fields as $field => $value){
+                $fieldString .= '`' . $field . '`,';
+                $valueString .= '?,';
+                $values[] = $value;
+            }
+
+            $fieldString = rtrim($fieldString, ',');
+            $valueString = rtrim($valueString, ',');
+            $sql = "CALL {$procedureName}({$valueString})";
+            if(!$this->query($sql, $values)->error()){
+                return intval($this->_result[0]->lastInsertedId);
+            }
+            return false;
+        }
+
+        public function update($table, $id, $fields = [], $multipleUpdate = false) {
             $fieldString = '';
             $values = [];
             foreach($fields as $field => $value){
@@ -146,6 +174,11 @@
             $fieldString = trim($fieldString);
             $fieldString = rtrim($fieldString, ',');
             $sql = "UPDATE {$table} SET {$fieldString} WHERE id = {$id}";
+
+            if($multipleUpdate) {
+                $sql = "UPDATE {$table} SET {$fieldString} WHERE id IN ({$id})";
+            }
+
             if(!$this->query($sql, $values)->error()){
                 return true;
             }
@@ -154,6 +187,15 @@
 
         public function delete($table, $id){
             $sql = "DELETE FROM {$table} WHERE id = {$id}";
+            if(!$this->query($sql)->error()){
+                return true;
+            }
+            return false;
+        }
+
+        public function multipleDelete($table, $ids){
+            $values = implode(',', $ids);
+            $sql = "DELETE FROM {$table} WHERE id IN ({$values})";
             if(!$this->query($sql)->error()){
                 return true;
             }

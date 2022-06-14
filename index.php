@@ -22,6 +22,14 @@
   if(file_exists(ROOT . DS . 'config/config.php')){
     require_once(ROOT . DS . 'config/config.php');
   }
+
+  if(file_exists(ROOT . DS . 'config/database.php')){
+    require_once(ROOT . DS . 'config/database.php');
+  }
+
+  if(file_exists(ROOT . DS . 'config/constants.php')){
+    require_once(ROOT . DS . 'config/constants.php');
+  }
   
   spl_autoload_register('autoload');
 

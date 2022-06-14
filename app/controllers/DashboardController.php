@@ -24,6 +24,8 @@
         public function index()
         {
             $data['totalOrders'] = $this->OrdersModel->getTotalOrders();
+            $data['totalOrdersAmount'] = $this->OrdersModel->getOrdersTotalAmount();
+            
             $data['currentUrl'] = 'dashboard';
             $this->view->render('dashboard/index', $data, 'dashboard');
         }

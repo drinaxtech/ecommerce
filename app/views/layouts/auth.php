@@ -10,6 +10,9 @@
     <link href="<?php echo BASE_URL; ?>assets/dashboard/css/auth.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/css/alertify_default.min.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/css/alertify.min.css" rel="stylesheet">
+    <script>
+        const BASE_URL = "<?php echo BASE_URL; ?>";
+    </script>
     <?php echo $this->content('head'); ?>
     
 </head>

@@ -202,7 +202,6 @@ table.dataTable.dtr-inline.collapsed > tbody > tr[role="row"] > td:first-child::
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <script>
-const baseUrl = "<?php echo BASE_URL; ?>";
 
 (function() {
     $('#description, #editDescription').summernote({
@@ -362,7 +361,7 @@ function deleteProduct(id) {
 
 function editProductModal(id) {
     let data = $('#product_' + id).data('stringify');
-    $('#editPreview').attr('src', baseUrl + 'assets/images/products/' + data.image);
+    $('#editPreview').attr('src', BASE_URL + 'assets/images/products/' + data.image);
     $('#product_id').val(data.id);
     $('#editName').val(data.name);
     $("#editDescription").summernote("code", data.description);

@@ -1,0 +1,114 @@
+@font-face {
+    font-family: 'campton-bold';
+    src: url(../fonts/campton/campton-bold-webfont.woff);
+    font-weight: bold;
+
+}
+
+@font-face {
+    font-family: 'campton-light';
+    src: url(../fonts/campton/campton-light-webfont.woff);
+    font-weight: 400;
+}
+
+
+html,body {
+    padding:0;
+    margin:0;
+    height:100%;
+    min-height: 100%;
+    background-color: #ebebeb;
+    font-family: 'campton-light', sans-serif;
+}
+#row1 {
+    background-color: white;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.circular {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+}
+
+.text-line {
+    width: 300px;
+}
+
+.bg-success {
+    background-color: #19ab6d !important;
+}
+
+.bg-cancel {
+    background-color: #e33222 !important;
+}
+
+.bg-pending {
+    background-color: #fd7922 !important;
+}
+
+.title {
+    font-size: 35px;
+    font-family: 'campton-bold', sans-serif;
+    text-transform: uppercase;
+}
+
+.success {
+    color: #19ab6d !important;
+}
+
+.cancel {
+    color: #e33222 !important;
+}
+
+.pending {
+    color: #fd7922 !important;
+}
+
+.fa_icon {
+    font-size: 135px;
+    color: #fff;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.logo-img {
+    height: 55px;
+    filter: brightness(0);
+}
+
+.btn-dark {
+    background-color: #000 !important;
+    width: 200px;
+}
+
+.socialShareLinks:hover {
+    text-decoration: unset !important;
+    opacity: 0.8;
+}
+
+
+@media screen and (max-width: 480px) {
+    #row1 {
+        height: 44% !important;
+    }
+    .h-50 {
+        height: 56% !important;
+    }
+}
+
+@media only screen and (max-width:767px) {
+    .circular {
+        width: 130px;
+        height: 130px;
+    }
+
+    .fa_icon {
+        font-size: 115px;
+    }
+}
+

@@ -14,7 +14,7 @@
         public function getAllProducts()
         {
             $query = $this->_db->query("SELECT *, products.id AS product_id, products.name AS product_name, categories.name AS category_name
-            FROM products INNER JOIN categories ON products.category_id = categories.id", []);
+            FROM products INNER JOIN categories ON products.category_id = categories.id WHERE soft_delete=0", []);
             if($query->num_rows() < 1){
                 return [];
             }
@@ -27,7 +27,7 @@
         public function getProduct($id)
         {
             $query = $this->_db->query("SELECT *, products.id AS product_id, products.name AS product_name FROM products
-             INNER JOIN categories ON products.category_id = categories.id WHERE products.id = ?", [$id]);
+             INNER JOIN categories ON products.category_id = categories.id WHERE products.id = ? AND soft_delete=0", [$id]);
             if($query->num_rows() < 1){
                 return false;
             }
@@ -52,9 +52,8 @@
         
         public function deleteProduct($id)
         {
-            $query = $this->_db->delete($this->table, $id);
-
-            return true;
+            $data['soft_delete'] = 1;
+            return $this->_db->update($this->table, $id, $data);
         }
 
 

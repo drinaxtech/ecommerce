@@ -13,7 +13,7 @@ function load_productsDataTable() {
       pageLength: 5,
       ajax: {
         type: "get",
-        url: baseUrl + "dashboard/get_products",
+        url: BASE_URL + "dashboard/get_products",
         dataSrc: "",
       },
       columns: [
@@ -100,7 +100,7 @@ function load_ordersDataTable() {
     pageLength: 5,
     ajax: {
       type: "get",
-      url: baseUrl + "dashboard/get_orders",
+      url: BASE_URL + "dashboard/get_orders",
       dataSrc: "",
     },
     columns: [
@@ -110,32 +110,31 @@ function load_ordersDataTable() {
         data: "id"
       },
       {
-        title: "Product Name",
-        data: "productName"
-      },
-      {
-        title: "Buyer Name",
-        data: "name"
-      },
-      {
-        title: "Buyer Surname",
-        data: "surname"
+        title: "Full Name",
+        data: null,
+        "render": function(data, type, row ){
+          return data.name + ' ' + data.surname;
+        }
       },
       {
         title: "Email",
         data: "email"
       },
       {
+        title: "Product Name",
+        data: "productName"
+      },
+      {
+        title: "Amount",
+        data: "amount"
+      },
+      {
         title: "Quantity",
         data: "quantity"
       },
       {
-        title: "Address",
-        data: "address"
-      },
-      {
-        title: "Zip Code",
-        data: "zip_code"
+        title: "Transaction ID",
+        data: "transactionId"
       },
       {
         title: "City",
@@ -146,15 +145,27 @@ function load_ordersDataTable() {
         data: "country"
       },
       {
-        title: "Payment Method",
-        data: "payment_method"
+        title: "Order Time",
+        data: "order_time"
       },
       {
-        title: "Order Time",
-        data: "reservation_time"
+        title: "Status",
+        data: null, 
+        "render": function(data, type, row ){
+          return data.paid == 1 ? 'Paid' : 'Not paid';
+        }
       },
       
-    ]
+    ],
+    initComplete: function( settings, json ) {
+      let paidStatus = $('#paidStatus option:selected').val();
+      let paidStatusDropdown = $('.paidStatus').html();
+      $('.paidStatus').remove();
+      let filterContent = '<div class="dataTables_filter d-flex">';
+      filterContent += '<label class="d-inline-flex"><span style="margin-right:15px">Paid status:</span>'+paidStatusDropdown + '</label></div>';
+      $('.col-sm-12.col-md-6').first().html(filterContent);
+      filterDtPaidStatus();
+    }
   });
 
 
@@ -175,7 +186,7 @@ function load_categoriesDataTable() {
     pageLength: 5,
     ajax: {
       type: "get",
-      url: baseUrl + "dashboard/get_categories",
+      url: BASE_URL + "dashboard/get_categories",
       dataSrc: "",
     },
     columns: [
@@ -216,4 +227,20 @@ function load_categoriesDataTable() {
   });
 
 
+}
+
+function filterDtPaidStatus() {
+  let paidStatus = $('#paidStatus option:selected').val();
+
+  if(paidStatus != '') {
+      $("#dataTables").DataTable()
+            .columns( 10 )
+            .search( '^'+paidStatus+'$', true, false )
+            .draw();
+  } else {
+    $("#dataTables").DataTable()
+            .columns( 10 )
+            .search( )
+            .draw();
+  }
 }

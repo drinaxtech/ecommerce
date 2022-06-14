@@ -8,11 +8,13 @@
 
     <link href="<?php echo BASE_URL; ?>assets/dashboard/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/dashboard/css/master.css" rel="stylesheet">
-    <link href="<?php echo BASE_URL; ?>assets/dashboard/css/Chart.min.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/dashboard/css/flag-icon.min.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/dashboard/css/datatables.min.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/css/alertify_default.min.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/css/alertify.min.css" rel="stylesheet">
+    <script>
+        const BASE_URL = "<?php echo BASE_URL; ?>";
+    </script>
     <?php echo $this->content('head'); ?>
 </head>
 
@@ -81,8 +83,6 @@
     <script src="<?php echo BASE_URL; ?>assets/dashboard/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/dashboard/js/solid.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/dashboard/js/fontawesome.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/dashboard/js/Chart.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/dashboard/js/dashboard-charts.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/dashboard/js/script.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/jquery.validate.min.js"></script>
     <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>

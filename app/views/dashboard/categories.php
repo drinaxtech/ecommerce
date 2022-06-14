@@ -96,8 +96,6 @@
 
 <script>
 
-const baseUrl = "<?php echo BASE_URL; ?>";
-
 (function() {
     load_categoriesDataTable();
 })();

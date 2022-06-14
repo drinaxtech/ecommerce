@@ -21,6 +21,38 @@
     overflow: hidden;
 }
 
+.sold_out {
+    top: 2em;
+    left: -4em;
+    color: #fff;
+    display: block;
+    position:absolute;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: .06em;
+    background-color: #AA0000C7;
+    padding: 0.5em 5em 0.4em 5em;
+    text-shadow: 0 0 0.75em #444;
+    box-shadow: 0 0 0.5em rgba(0,0,0,0.5);
+    font: bold 16px/1.2em Arial, Sans-Serif;
+    -webkit-text-shadow: 0 0 0.75em #444;
+    -webkit-box-shadow: 0 0 0.5em rgba(0,0,0,0.5);
+    -webkit-transform: rotate(-45deg) scale(0.75,1);
+    z-index:10;
+}
+.sold_out:before {
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    margin: -0.3em -5em;
+    transform: scale(0.7);
+    -webkit-transform: scale(0.7);
+    border: 2px rgba(255,255,255,0.7) dashed;
+}
+
 </style>
 
 <?php $this->end(); ?>
@@ -88,7 +120,7 @@
         <?php if(count($products) > 0): ?>
           <!-- Product column-->
           <?php foreach($products as $product): ?>
-          <div class="col-lg-3 col-md-6 mb-4 product <?php echo $product->name; ?>">
+          <div class="col-lg-3 col-md-6 mb-4 product <?php echo $product->name; ?>" onclick="goToProductPage(<?php echo $product->product_id; ?>)">
 
             <!--Card-->
             <a href="<?php echo BASE_URL; ?>product/item/<?php echo $product->product_id; ?>">
@@ -111,13 +143,19 @@
                 </a>
                 <h5>
                   <strong>
-                    <a href="<?php echo BASE_URL; ?>product/item/<?php echo $product->product_id; ?>" class="dark-grey-text"><?php echo ucfirst($product->product_name); ?>
+                    <a id="order_<?php echo $product->product_id; ?>" href="<?php echo BASE_URL; ?>product/item/<?php echo $product->product_id; ?>" class="dark-grey-text">
+                      <?php echo ucfirst($product->product_name); ?>
                     </a>
                   </strong>
                 </h5>
 
                 <h4 class="font-weight-bold blue-text">
-                  <strong><?php echo number_format($product->price, 2); ?>$</strong>
+                  <strong>
+                    <?php echo number_format($product->price, 2); ?>$ 
+                    <?php if(isset($ordersNumber[$product->product_id]) && $ordersNumber[$product->product_id] >= intval($product->quantity)): ?>
+                    <span class="sold_out">Sold out</span>
+                    <?php endif; ?>
+                </strong>
                 </h4>
 
               </div>
@@ -205,6 +243,10 @@
     $('.filter-bar').removeClass('active');
     $(el).closest('li').addClass('active');
     $('.product').show();
+  }
+
+  function goToProductPage(productId) {
+    window.location.href = BASE_URL + 'product/item/' + productId;
   }
 
 </script>

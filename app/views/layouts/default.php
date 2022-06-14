@@ -15,6 +15,12 @@
   <!-- Your custom styles (optional) -->
   <link href="<?php echo BASE_URL; ?>assets/css/style.min.css" rel="stylesheet">
 
+  <link href="<?php echo BASE_URL; ?>assets/css/alertify_default.min.css" rel="stylesheet">
+  <link href="<?php echo BASE_URL; ?>assets/css/alertify.min.css" rel="stylesheet">
+
+  <script>
+        const BASE_URL = "<?php echo BASE_URL; ?>";
+  </script>
 
   <?php echo $this->content('head'); ?>
 
@@ -123,7 +129,7 @@
 
 
   <!--Footer-->
-  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+  <footer style="visibility: visible !important;" class="page-footer text-center font-small mt-4 wow fadeIn">
     <!--Copyright-->
     <div class="footer-copyright py-3">
       © 2018 Copyright:

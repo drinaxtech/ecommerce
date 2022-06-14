@@ -12,6 +12,7 @@
             parent::__construct($controller, $action);
             $this->load_model('Products');
             $this->load_model('Categories');
+            $this->load_model('Orders');
         }
 
         public function index() {
@@ -20,6 +21,7 @@
             $products = $this->ProductsModel->getAllProducts();
             $data['categories'] = $this->CategoriesModel->getAllCategories();
             $data['products'] = $products;
+            $data['ordersNumber'] = $this->OrdersModel->getOrdersNumberByProductId();
 
             $this->view->render('products/index', $data);
         }
@@ -29,6 +31,7 @@
             $product = $this->ProductsModel->getProduct($productId);
             if(!$product) Router::redirect('');
             $data['product'] = $product;
+            $data['ordersNumber'] = $this->OrdersModel->getOrdersNumberByProductId();
             $this->view->render('products/product', $data);
         }
 
@@ -42,14 +45,16 @@
             $productAmount = intval($productQuantity) * floatval($productPrice);
 
             unset($products[$productId]);
-            
-            $products[$productId] = [
-                'id' => $productId,
-                'productName' => $productName,
-                'productQuantity' => $productQuantity,
-                'productPrice' => $productPrice,
-                'productAmount' => $productAmount
-            ];
+
+            if($productQuantity > 0) {
+                $products[$productId] = [
+                    'id' => $productId,
+                    'productName' => $productName,
+                    'productQuantity' => $productQuantity,
+                    'productPrice' => $productPrice,
+                    'productAmount' => $productAmount
+                ];
+            }
 
             $basketQuantity = 0;
             foreach($products as $product){
@@ -62,4 +67,6 @@
 
 
         }
+
+  
     }

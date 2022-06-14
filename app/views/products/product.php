@@ -1,14 +1,14 @@
 <?php $this->setSiteTitle('drxshop - '. $product->name); ?>
-<?php $this->start('head'); ?>
-
-    <link href="<?php echo BASE_URL; ?>assets/css/alertify_default.min.css" rel="stylesheet">
-    <link href="<?php echo BASE_URL; ?>assets/css/alertify.min.css" rel="stylesheet">
-
-<?php $this->end(); ?>
-
-
 
 <?php $this->start('body'); ?>
+
+<?php 
+
+$productSold = isset($ordersNumber[$product->product_id]) ? intval($ordersNumber[$product->product_id]) : 0;
+
+$maxProductLeft = intval($product->quantity) - $productSold;
+
+?>
 
 <main class="mt-5 pt-4">
     <div class="container dark-grey-text mt-5">
@@ -36,6 +36,12 @@
               </a>
             </div>
 
+            <?php if(isset($ordersNumber[$product->product_id]) && $ordersNumber[$product->product_id] >= intval($product->quantity)): ?>
+              <span id="product-name" class="badge red mr-1 mb-3" style="height: 30px;padding-top: 8px;width: 80px;">
+                SOLD OUT
+              </span>
+            <?php endif; ?>  
+
             <p class="lead">
               <span>$<?php echo number_format($product->price, 2); ?></span>
             </p>
@@ -46,14 +52,21 @@
 
             <p><?php echo $product->description; ?></p>
 
+            
+            <?php if(isset($ordersNumber[$product->product_id]) && $ordersNumber[$product->product_id] >= intval($product->quantity)): ?>
+              
+            <?php else: ?>  
+
             <form class="d-flex justify-content-left">
               <!-- Default input -->
-              <input type="number" value="1" id="quantity" data-productId="<?php echo $product->product_id; ?>" aria-label="Search" class="form-control" style="width: 100px">
+              <input type="number" value="1" min="0" max="<?php echo $maxProductLeft; ?>" id="quantity" data-productId="<?php echo $product->product_id; ?>" aria-label="Search" class="form-control" style="width: 100px">
               <button class="btn btn-primary btn-md my-0 p" type="button" onclick="addToCart(this, '<?php echo $product->price; ?>')">Add to cart
                 <i class="fa fa-shopping-cart ml-1"></i>
               </button>
 
             </form>
+
+            <?php endif; ?>
 
           </div>
           <!--Content-->
@@ -66,52 +79,6 @@
 
       <hr>
 
-      <!--Grid row-->
-      <div class="row d-flex justify-content-center wow fadeIn">
-
-        <!--Grid column-->
-        <div class="col-md-6 text-center">
-
-          <h4 class="my-4 h4">Additional information</h4>
-
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit voluptates,
-            quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
-
-        </div>
-        <!--Grid column-->
-
-      </div>
-      <!--Grid row-->
-
-      <!--Grid row-->
-      <div class="row wow fadeIn">
-
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-12 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
-
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-6 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
-
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-lg-4 col-md-6 mb-4">
-
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
-
-        </div>
-        <!--Grid column-->
-
-      </div>
-      <!--Grid row-->
 
     </div>
   </main>
@@ -120,8 +87,7 @@
 
 <?php $this->start('footer'); ?>
 <script>
-const BASE_URL = '<?php echo BASE_URL; ?>';
-    </script>
+</script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/alertify.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/home/app.js"></script>
 
